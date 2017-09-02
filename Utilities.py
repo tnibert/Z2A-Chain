@@ -1,41 +1,13 @@
-# to start we'll follow this tutorial: http://blockxchain.org/2017/06/04/building-a-blockchain-with-python-1/
 #! /usr/bin/env python
 import hashlib
 import time
 import random
 
-class Block:
-    def __init__(self, index, previousHash, timestamp, data, currentHash):
-        self.index = index
-        self.previousHash = previousHash
-        self.timestamp = timestamp
-        self.data = data        # we should make this so that it can be non string data
-        self.currentHash = currentHash
+from BlockChain import Block, BlockChain
 
-    def __str__(self):
-        return ("Index: " + str(self.index) + "\nTimestamp: " + str(self.timestamp) + "\nData: " + str(self.data) + "\nCurrent Hash: " + str(self.currentHash) + "\nPrevious Hash: " + str(self.previousHash))
-
-
-class BlockChain():
-    def __init__(self):
-        self.blockchain = [createGenesisBlock()]
-
-    def getLatestBlock(self):
-        return self.blockchain[-1]
-
-    def generateNextBlock(self, blockData):
-        previousBlock = self.getLatestBlock()
-        nextIndex = previousBlock.index + 1
-        nextTimestamp = time.time()
-        nextHash = calculateHash(nextIndex, previousBlock.currentHash, nextTimestamp, blockData)
-        #return Block(nextIndex, previousBlock.currentHash, nextTimestamp, nextHash)
-        self.blockchain.append(Block(nextIndex, previousBlock.currentHash, nextTimestamp, blockData, nextHash))
-
-    def __str__(self):
-        retstr = ""
-        for block in self.blockchain:
-            retstr += str(block)
-        return retstr
+"""
+So here's an idea: make the data on a given block only available to author, probably using public/private key encryption
+"""
 
 def generateRandomHash():
     return ("%032x" % random.getrandbits(256))
@@ -44,8 +16,6 @@ def createGenesisBlock():
     # change timestamp to current time
     # customize hash
     return Block(0, '0', time.time(), "Genesis Block", generateRandomHash()) #'0q23nfa0se8fhPH234hnjldapjfasdfansdf23')
-
-#blockchain = [getGenesisBlock()]
 
 def calculateHash(index, previousHash, timestamp, data):
     # make data calculated based on bits

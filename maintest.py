@@ -1,15 +1,16 @@
 import unittest
-import main
+import Utilities
+import BlockChain
 
 class blocktest(unittest.TestCase):
 
     def testrandhash(self):
-        print("Generating random hash")
-        print(main.generateRandomHash())
+        print("\nGenerating random hash")
+        print(Utilities.generateRandomHash())
 
     def testcreategenesisblock(self):
-        print("Testing genesis block creation")
-        print(main.createGenesisBlock())
+        print("\nTesting genesis block creation")
+        print(Utilities.createGenesisBlock())
 
 #    def testcreatesecondblock(self):
 #        blockli
@@ -18,19 +19,19 @@ class blocktest(unittest.TestCase):
 class blockchaintest(unittest.TestCase):
 
     def testblockchainclass(self):
-        print("Creating one item blockchain")
-        mychain = main.BlockChain()
+        print("\nCreating one item blockchain")
+        mychain = Utilities.BlockChain()
         print(mychain)
 
     def testgetlatestblock(self):
-        print("Get latest block")
-        mychain = main.BlockChain()
+        print("\nGet latest block")
+        mychain = Utilities.BlockChain()
         test = mychain.getLatestBlock()
         print(test)
 
     def testaddtoblockchain(self):
-        print("Adding to new block")
-        mychain = main.BlockChain()
+        print("\nAdding to new block")
+        mychain = Utilities.BlockChain()
         mychain.generateNextBlock("Block 2")
         mychain.generateNextBlock("Block 3")
         print(mychain)
