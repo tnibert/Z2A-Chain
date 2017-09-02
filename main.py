@@ -2,6 +2,7 @@
 #! /usr/bin/env python
 import hashlib
 import time
+import random
 
 class Block:
     def __init__(self, index, previousHash, timestamp, data, currentHash):
@@ -11,10 +12,13 @@ class Block:
         self.data = data
         self.currentHash = currentHash
 
+def generateRandomHash():
+    return ("%032x" % random.getrandbits(128))
+
 def getGenesisBlock():
     # change timestamp to current time
     # customize hash
-    return Block(0, '0', '1496518102.896031', "My very first block :)", '0q23nfa0se8fhPH234hnjldapjfasdfansdf23')
+    return Block(0, '0', time.time(), "Genesis Block", '0q23nfa0se8fhPH234hnjldapjfasdfansdf23')
 
 blockchain = [getGenesisBlock()]
 
