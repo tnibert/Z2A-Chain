@@ -9,20 +9,24 @@ class Block:
         self.index = index
         self.previousHash = previousHash
         self.timestamp = timestamp
-        self.data = data
+        self.data = data        # we should make this so that it can be non string data
         self.currentHash = currentHash
 
+    def __str__(self):
+        return ("Index: " + str(self.index) + "\nTimestamp: " + str(self.timestamp) + "\nData: " + str(self.data) + "\nCurrent Hash: " + str(self.currentHash) + "\nPrevious Hash: " + str(self.previousHash))
+
 def generateRandomHash():
-    return ("%032x" % random.getrandbits(128))
+    return ("%032x" % random.getrandbits(256))
 
 def getGenesisBlock():
     # change timestamp to current time
     # customize hash
-    return Block(0, '0', time.time(), "Genesis Block", '0q23nfa0se8fhPH234hnjldapjfasdfansdf23')
+    return Block(0, '0', time.time(), "Genesis Block", generateRandomHash()) #'0q23nfa0se8fhPH234hnjldapjfasdfansdf23')
 
 blockchain = [getGenesisBlock()]
 
 def calculateHash(index, previousHash, timestamp, data):
+    # make data calculated based on bits
     value = str(index) + str(previousHash) + str(timestamp) + str(data)
     sha = hashlib.sha256(value.encode('utf-8'))
     return str(sha.hexdigest())
@@ -81,3 +85,5 @@ def isValidChain(bcToValidate):
         else:
             return False
     return True
+
+# next: incorporate into consensus network
