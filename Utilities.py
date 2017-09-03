@@ -9,11 +9,12 @@ from BlockChain import Block, BlockChain
 So here's an idea: make the data on a given block only available to author, probably using public/private key encryption
 """
 
+# used locally
+
 def generateRandomHash():
     return ("%032x" % random.getrandbits(256))
 
 def createGenesisBlock():
-    # change timestamp to current time
     # customize hash
     return Block(0, '0', time.time(), "Genesis Block", generateRandomHash()) #'0q23nfa0se8fhPH234hnjldapjfasdfansdf23')
 
@@ -27,22 +28,13 @@ def calculateHashForBlock(block):
     return calculateHash(block.index, block.previousHash, block.timestamp, block.data)
 
 
-
 # check if two blocks are the same
-# we can move this into a method of the block class
+# we can move this into a method of the block class - MOVED
 def isSameBlock(block1, block2):
-    if block1.index != block2.index:
-        return False
-    elif block1.previousHash != block2.previousHash:
-        return False
-    elif block1.timestamp != block2.timestamp:
-        return False
-    elif block1.data != block2.data:
-        return False
-    elif block1.currentHash != block2.currentHash:
-        return False
-    return True
+    return block1 == block2
 
+
+# these two can be moved into BlockChain classes
 # determine if new block is valid
 def isValidNewBlock(newBlock, previousBlock):
     if previousBlock.index + 1 != newBlock.index:

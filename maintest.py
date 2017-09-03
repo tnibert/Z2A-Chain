@@ -12,6 +12,9 @@ class blocktest(unittest.TestCase):
         print("\nTesting genesis block creation")
         print(Utilities.createGenesisBlock())
 
+    def testblockcompare(self):
+        pass
+
 #    def testcreatesecondblock(self):
 #        blockli
 #        blocklist.append
@@ -35,6 +38,14 @@ class blockchaintest(unittest.TestCase):
         mychain.generateNextBlock("Block 2")
         mychain.generateNextBlock("Block 3")
         print(mychain)
+
+class validationtest(unittest.TestCase):
+
+    def testisvalidnewblock(self):
+        pass
+
+    def testisvalidchain(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()

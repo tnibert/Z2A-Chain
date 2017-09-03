@@ -34,3 +34,19 @@ class Block:
 
     def __str__(self):
         return ("\nIndex: " + str(self.index) + "\nTimestamp: " + str(self.timestamp) + "\nData: " + str(self.data) + "\nCurrent Hash: " + str(self.currentHash) + "\nPrevious Hash: " + str(self.previousHash))
+
+    def __eq__(self, other):
+        if self.index != other.index:
+            return False
+        elif self.previousHash != other.previousHash:
+            return False
+        elif self.timestamp != other.timestamp:
+            return False
+        elif self.data != other.data:
+            return False
+        elif self.currentHash != other.currentHash:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
