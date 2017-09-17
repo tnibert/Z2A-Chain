@@ -1,5 +1,5 @@
-import BlockChain
-import Utilities
+#import BlockChain
+#import Utilities
 
 # build off https://benediktkr.github.io/dev/2016/02/04/p2p-with-twisted.html
 
@@ -52,13 +52,28 @@ class MyProtocol(Protocol):
 
 
 class MyFactory(Factory):
-    def startFactory(self):
-        self.peers = {}
+
+    def __init__(self):
         self.nodeid = generate_nodeid()
 
+    def startFactory(self):
+        self.peers = {}
+        #self.nodeid = generate_nodeid()
+
     def buildProtocol(self, addr):
-        return NCProtocol(self)
+        return MyProtocol(self)
 
 
 endpoint = TCP4ServerEndpoint(reactor, 5999)
 endpoint.listen(MyFactory())
+
+from twisted.internet.endpoints import TCP4ClientEndpoint, connectProtocol
+
+def gotProtocol(p):
+    """The callback to start the protocol exchange. We let connecting
+    nodes start the hello handshake"""
+    p.send_hello()
+
+point = TCP4ClientEndpoint(reactor, "localhost", 5999)
+d = connectProtocol(point, MyProtocol(MyFactory()))
+d.addCallback(gotProtocol)
